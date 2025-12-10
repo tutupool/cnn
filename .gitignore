@@ -1,0 +1,24 @@
+# Python 虚拟环境
+venv/
+.venv/
+
+# Python 缓存
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# 模型文件（可选，如果太大可以忽略）
+# *.h5
+
+# IDE
+.vscode/
+.idea/
+
+# 临时文件
+*.log
+*.tmp
+
+# 系统文件
+.DS_Store
+Thumbs.db
