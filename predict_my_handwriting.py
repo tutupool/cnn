@@ -483,49 +483,6 @@ class HandwritingPredictor:
         
         plt.tight_layout()
         plt.show()
-        
-        # 显示错误样本
-        errors = [r for r in results if not r['correct']]
-        if errors:
-            self._show_errors(errors[:20])  # 最多显示20个
-    
-    def _show_errors(self, errors):
-        """显示错误预测的样本"""
-        n = len(errors)
-        cols = min(5, n)
-        rows = (n + cols - 1) // cols
-        
-        fig, axes = plt.subplots(rows, cols, figsize=(3 * cols, 3 * rows))
-        if n == 1:
-            axes = [[axes]]
-        elif rows == 1:
-            axes = [axes]
-        
-        for idx, error in enumerate(errors):
-            row, col = idx // cols, idx % cols
-            ax = axes[row][col] if rows > 1 else axes[col]
-            
-            # 加载并显示图片
-            image_path = os.path.join(self.data_dir, error['filename'])
-            processed = self.preprocess_image(image_path)
-            
-            if processed is not None:
-                ax.imshow(processed, cmap='gray')
-            
-            ax.set_title(f"真:{error['true_label']} 预:{error['pred_label']}\n"
-                        f"置信度:{error['confidence']:.2f}", 
-                        fontsize=9, color='red')
-            ax.axis('off')
-        
-        # 隐藏多余的子图
-        for idx in range(n, rows * cols):
-            row, col = idx // cols, idx % cols
-            ax = axes[row][col] if rows > 1 else axes[col]
-            ax.axis('off')
-        
-        plt.suptitle('错误预测样本 (预处理后)', fontsize=12, color='red')
-        plt.tight_layout()
-        plt.show()
     
     def compare_with_mnist(self, image_path):
         """将预处理后的图片与MNIST样本对比"""
